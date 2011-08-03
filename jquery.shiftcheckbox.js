@@ -1,3 +1,12 @@
+/* ShiftCheckbox jQuery plugin
+ *
+ * Copyright (C) 2011 James Nylen
+ *
+ * Released under MIT license
+ * For details see:
+ * https://github.com/nylen/shiftcheckbox
+ */
+
 (function($) {
   var ns = '.shiftcheckbox';
 
