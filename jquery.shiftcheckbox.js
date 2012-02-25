@@ -1,6 +1,6 @@
 /* ShiftCheckbox jQuery plugin
  *
- * Copyright (C) 2011 James Nylen
+ * Copyright (C) 2011-2012 James Nylen
  *
  * Released under MIT license
  * For details see:
@@ -16,71 +16,78 @@
       selectAll: null
     }, opts);
 
+    var $containers;
     var $checkboxes;
-    var $rows;
+    var $containersSelectAll;
+    var $checkboxesSelectAll;
+    var $containersAll;
+    var $checkboxesAll;
+
+    if (opts.selectAll) {
+      // We need to set up a "select all" control
+      $containersSelectAll = $(opts.selectAll);
+      if ($containersSelectAll && !$containersSelectAll.length) {
+        $containersSelectAll = false;
+      }
+    }
+
+    if ($containersSelectAll) {
+      $checkboxesSelectAll = $containersSelectAll
+        .filter(':checkbox')
+        .add($containersSelectAll.find(':checkbox'));
+      $containersSelectAll = $containersSelectAll.not(':checkbox').filter(function() {
+        return !!$(this).find($checkboxesSelectAll).length;
+      }).each(function() {
+        $(this).data('childCheckbox', $(this).find($checkboxesSelectAll)[0]);
+      });
+    }
 
     if (opts.checkboxSelector) {
+
       // checkboxSelector means that the elements we need to attach handlers to
-      // ($rows) are not actually checkboxes but contain them instead
-      $rows = this.filter(function() {
+      // ($containers) are not actually checkboxes but contain them instead
+
+      $containersAll = this.filter(function() {
         return !!$(this).find(opts.checkboxSelector).filter(':checkbox').length;
+      }).each(function() {
+        $(this).data('childCheckbox', $(this).find(opts.checkboxSelector).filter(':checkbox')[0]);
+      }).add($containersSelectAll);
+
+      $checkboxesAll = $containersAll.map(function() {
+        return $(this).data('childCheckbox');
       });
-      $checkboxes = $rows.map(function() {
-        return $(this).find(opts.checkboxSelector).filter(':checkbox')[0];
-      });
-      for (var i = 0; i < $checkboxes.length; i++) {
-        $rows.eq(i).data('childCheckbox', $checkboxes.eq(i));
-      }
+
     } else {
-      $checkboxes = this.filter(':checkbox');
+
+      $checkboxesAll = this.filter(':checkbox').add($checkboxesSelectAll);
+
     }
+
+    if ($checkboxesSelectAll && !$checkboxesSelectAll.length) {
+      $checkboxesSelectAll = false;
+    }
+
+    if ($containersAll) {
+      $containers = $containersAll.not($containersSelectAll);
+    }
+    $checkboxes = $checkboxesAll.not($checkboxesSelectAll);
 
     if (!$checkboxes.length) {
       return;
     }
 
-    if (opts.selectAll) {
-      // We need to set up a "select all" control
-      opts.$selectAll = $(opts.selectAll);
-      if (opts.$selectAll && !opts.$selectAll.length) {
-        opts.$selectAll = false;
-      }
-    }
-    if (opts.$selectAll) {
-      opts.$selectAllCheckbox = opts.$selectAll
-        .filter(':checkbox')
-        .add(opts.$selectAll.find(':checkbox'));
-
-      if (opts.$selectAllCheckbox && !opts.$selectAllCheckbox.length) {
-        opts.$selectAllCheckbox = false;
-      }
-      opts.$selectAll.bind('click' + ns, function(e) {
-        var checked;
-        if (opts.$selectAllCheckbox) {
-          // Toggle the select all checkbox unless the user clicked on the
-          // checkbox itself or a label that points to it
-          var labelFor = $(e.target).closest('label').attr('for');
-          if (!labelFor || !opts.$selectAllCheckbox.filter('#' + labelFor).length) {
-            $(opts.$selectAllCheckbox).not(e.target).attr('checked', function() {
-              return !opts.$selectAllCheckbox.attr('checked');
-            });
-          }
-          checked = !!opts.$selectAllCheckbox.attr('checked');
-        } else {
-          checked = !$checkboxes.eq(0).attr('checked');
-        }
-        $checkboxes.attr('checked', checked);
-      });
-    }
-    if (opts.$selectAllCheckbox) {
-      opts.$selectAllCheckbox.attr('checked', !$checkboxes.not(':checked').length);
-    }
-
     var lastIndex = -1;
 
     var checkboxClicked = function(e) {
-      var curIndex = $checkboxes.index(this);
       var checked = !!$(this).attr('checked');
+
+      var curIndex = $checkboxes.index(this);
+      if (curIndex < 0) {
+        if ($checkboxesSelectAll.filter(this).length) {
+          $checkboxesAll.attr('checked', checked);
+        }
+        return;
+      }
 
       if (e.shiftKey && lastIndex != -1) {
         var di = (curIndex > lastIndex ? 1 : -1);
@@ -89,20 +96,28 @@
         }
       }
 
-      if (opts.$selectAll && opts.$selectAllCheckbox) {
+      if ($checkboxesSelectAll) {
         if (checked && !$checkboxes.not(':checked').length) {
-          opts.$selectAllCheckbox.attr('checked', true);
+          $checkboxesSelectAll.attr('checked', true);
         } else if (!checked) {
-          opts.$selectAllCheckbox.attr('checked', false);
+          $checkboxesSelectAll.attr('checked', false);
         }
       }
 
       lastIndex = curIndex;
     };
 
+    if ($checkboxesSelectAll) {
+      $checkboxesSelectAll
+        .attr('checked', !$checkboxes.not(':checked').length)
+        .filter(function() {
+          return !$containersAll.find(this).length;
+        }).bind('click' + ns, checkboxClicked);
+    }
+
     if (opts.checkboxSelector) {
-      $rows.bind('click' + ns, function(e) {
-        var $checkbox = $(this).data('childCheckbox');
+      $containersAll.bind('click' + ns, function(e) {
+        var $checkbox = $($(this).data('childCheckbox'));
         $checkbox.not(e.target).attr('checked', function() {
           return !$checkbox.attr('checked');
         });
@@ -111,12 +126,18 @@
         checkboxClicked.call($checkbox, e);
 
         // If the user clicked on a label inside the row that points to the
-        // current row's checkbox, cancel the event (but putting labels inside
-        // rows would be a kind of screwy thing to do anyway, unless it was for
-        // progressive enhancement).
-        var labelFor = $(e.target).closest('label').attr('for');
+        // current row's checkbox, cancel the event.
+        var $label = $(e.target).closest('label');
+        var labelFor = $label.attr('for');
         if (labelFor && labelFor == $checkbox.attr('id')) {
-          return false;
+          if ($label.find($checkbox).length) {
+            // Special case:  The label contains the checkbox.
+            if ($checkbox[0] != e.target) {
+              return false;
+            }
+          } else {
+            return false;
+          }
         }
       }).bind('mousedown' + ns, function(e) {
         if (e.shiftKey) {
