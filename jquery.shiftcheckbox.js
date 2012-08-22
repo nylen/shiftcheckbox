@@ -5,6 +5,8 @@
  * Released under MIT license
  * For details see:
  * https://github.com/nylen/shiftcheckbox
+ *
+ * Requires jQuery v1.6 or higher.
  */
 
 (function($) {
