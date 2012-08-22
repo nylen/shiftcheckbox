@@ -17,6 +17,11 @@
 
         $('#demo2 :checkbox').shiftcheckbox();
 
+        $('#demo3 .row').shiftcheckbox({
+          checkboxSelector: ':checkbox',
+          selectAll: '#demo3 .all'
+        });
+
         $('.demo a').click(function() {
           //document.location.href = $(this).attr('href');
           $('#demo1-link')
@@ -41,10 +46,10 @@
       h2 {
         margin: 1em 0;
       }
-      .all {
+      #demo1 .all, #demo2 .all {
         margin-bottom: .75em;
       }
-      .all:hover, .checkbox:hover {
+      .all:hover, .checkbox:hover, div.row:hover {
         background: #eee;
       }
       code, pre {
@@ -234,6 +239,67 @@
       <div>
         <input type="checkbox" id="cb-2-9" />
         <label for="cb-2-9">Demo 2 checkbox 9 label</label>
+      </div>
+    </div>
+
+    <h2>Demo 3 - Special cases</h2>
+    <div class="demo" id="demo3">
+      <p>
+        This demo tests a couple of special cases: labels that contain the
+        checkboxes they point to (whether or not they are row elements) and
+        select-all checkboxes and links inside and outside of row elements.
+      </p>
+      <p>
+        Code:
+<pre>$('#demo3 .row').shiftcheckbox({
+  checkboxSelector: ':checkbox',
+  selectAll: '#demo3 .all'
+});</pre>
+        To disable the plugin:
+        <code>$('#demo3 .row, #demo3 .all').unbind('.shiftcheckbox');</code>
+      </p>
+      <input type="checkbox" class="all" /> <a class="all" href="#">Select all 1</a>
+      <div class="row all">
+        <input type="checkbox" /> <a class="all" href="#">Select all 2</a>
+      </div>
+      <div class="row">
+        <input type="checkbox" class="all" /> <a class="all" href="#">Select all 3</a>
+      </div>
+      <div>
+        <label class="row" for="cb-3-1">
+          <input type="checkbox" id="cb-3-1" />
+          Demo 3 checkbox 1 label
+        </label>
+      </div>
+      <div>
+        <label class="row" for="cb-3-2">
+          <input type="checkbox" id="cb-3-2" />
+          Demo 3 checkbox 2 label
+        </label>
+      </div>
+      <div>
+        <label class="row" for="cb-3-3">
+          <input type="checkbox" id="cb-3-3" />
+          Demo 3 checkbox 3 label
+        </label>
+      </div>
+      <div class="row">
+        <label for="cb-3-4">
+          <input type="checkbox" id="cb-3-4" />
+          Demo 3 checkbox 4 label
+        </label>
+      </div>
+      <div class="row">
+        <label for="cb-3-5">
+          <input type="checkbox" id="cb-3-5" />
+          Demo 3 checkbox 5 label
+        </label>
+      </div>
+      <div class="row">
+        <label for="cb-3-6">
+          <input type="checkbox" id="cb-3-6" />
+          Demo 3 checkbox 6 label
+        </label>
       </div>
     </div>
   </body>
