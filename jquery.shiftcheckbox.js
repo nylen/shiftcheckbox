@@ -131,7 +131,12 @@
 
     if ($otherSelectAll) {
       $otherSelectAll.bind('click' + ns, function() {
-        var checked = !!$checkboxes.eq(0).attr('checked');
+        var checked;
+        if ($checkboxesSelectAll) {
+          checked = !!$checkboxesSelectAll.eq(0).attr('checked');
+        } else {
+          checked = !!$checkboxes.eq(0).attr('checked');
+        }
         $checkboxesAll.attr('checked', !checked);
       });
     }
