@@ -6,7 +6,7 @@
  * For details see:
  * https://github.com/nylen/shiftcheckbox
  *
- * Requires jQuery v1.6 or higher.
+ * Requires jQuery v1.7 or higher.
  */
 
 (function($) {
@@ -24,7 +24,7 @@
     }
 
     $.fn.scb_changeChecked = function(opts, checked) {
-      this.attr('checked', checked);
+      this.prop('checked', checked);
       opts.onChange.call(this, checked);
       return this;
     }
@@ -104,7 +104,7 @@
     var lastIndex = -1;
 
     var checkboxClicked = function(e) {
-      var checked = !!$(this).attr('checked');
+      var checked = !!$(this).prop('checked');
 
       var curIndex = $checkboxes.index(this);
       if (curIndex < 0) {
@@ -134,29 +134,29 @@
 
     if ($checkboxesSelectAll) {
       $checkboxesSelectAll
-        .attr('checked', !$checkboxes.not(':checked').length)
+        .prop('checked', !$checkboxes.not(':checked').length)
         .filter(function() {
           return !$containersAll.find(this).length;
-        }).bind('click' + ns, checkboxClicked);
+        }).on('click' + ns, checkboxClicked);
     }
 
     if ($otherSelectAll) {
-      $otherSelectAll.bind('click' + ns, function() {
+      $otherSelectAll.on('click' + ns, function() {
         var checked;
         if ($checkboxesSelectAll) {
-          checked = !!$checkboxesSelectAll.eq(0).attr('checked');
+          checked = !!$checkboxesSelectAll.eq(0).prop('checked');
         } else {
-          checked = !!$checkboxes.eq(0).attr('checked');
+          checked = !!$checkboxes.eq(0).prop('checked');
         }
         $checkboxesAll.scb_changeChecked(opts, !checked);
       });
     }
 
     if (opts.checkboxSelector) {
-      $containersAll.bind('click' + ns, function(e) {
+      $containersAll.on('click' + ns, function(e) {
         var $checkbox = $($(this).data('childCheckbox'));
         $checkbox.not(e.target).each(function() {
-          var checked = !$checkbox.attr('checked');
+          var checked = !$checkbox.prop('checked');
           $(this).scb_changeChecked(opts, checked);
         });
 
@@ -177,14 +177,14 @@
             return false;
           }
         }
-      }).bind('mousedown' + ns, function(e) {
+      }).on('mousedown' + ns, function(e) {
         if (e.shiftKey) {
           // Prevent selecting text by Shift+click
           return false;
         }
       });
     } else {
-      $checkboxes.bind('click' + ns, checkboxClicked);
+      $checkboxes.on('click' + ns, checkboxClicked);
     }
 
     return this;

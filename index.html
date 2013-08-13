@@ -136,7 +136,7 @@ $('#demo1 :checkbox').change(function() {
   setInfoText('Clicked checkbox ' + $(this).attr('id') + ', checked=' + this.checked);
 });</pre>
         To disable the plugin:
-        <code class="prettyprint">$('#demo1 div.checkbox, #demo1 .all').unbind('.shiftcheckbox');</code>
+        <code class="prettyprint">$('#demo1 div.checkbox, #demo1 .all').off('.shiftcheckbox');</code>
       </p>
       <p id="demo1-link">Nothing interesting has happened yet</p>
       <div class="all">
@@ -218,7 +218,7 @@ $('#demo1 :checkbox').change(function() {
         Code: <code class="prettyprint">$('#demo2 :checkbox').shiftcheckbox();</code>
         <br />
         To disable the plugin:
-        <code class="prettyprint">$('#demo2 :checkbox').unbind('.shiftcheckbox');</code>
+        <code class="prettyprint">$('#demo2 :checkbox').off('.shiftcheckbox');</code>
       </p>
       <div>
         <input type="checkbox" id="cb-2-1" />
@@ -272,7 +272,7 @@ $('#demo1 :checkbox').change(function() {
   selectAll: '#demo3 .all'
 });</pre>
         To disable the plugin:
-        <code class="prettyprint">$('#demo3 .row, #demo3 .all').unbind('.shiftcheckbox');</code>
+        <code class="prettyprint">$('#demo3 .row, #demo3 .all').off('.shiftcheckbox');</code>
       </p>
       <input type="checkbox" class="all" /> <a class="all" href="#">Select all 1</a>
       <div class="row all">
