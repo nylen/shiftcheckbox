@@ -15,8 +15,19 @@
   $.fn.shiftcheckbox = function(opts) {
     opts = $.extend({
       checkboxSelector: null,
-      selectAll: null
+      selectAll: null,
+      onChange: null
     }, opts);
+
+    if (typeof opts.onChange != 'function') {
+      opts.onChange = function(checked) { };
+    }
+
+    $.fn.scb_changeChecked = function(opts, checked) {
+      this.attr('checked', checked);
+      opts.onChange.call(this, checked);
+      return this;
+    }
 
     var $containers;
     var $checkboxes;
@@ -98,7 +109,7 @@
       var curIndex = $checkboxes.index(this);
       if (curIndex < 0) {
         if ($checkboxesSelectAll.filter(this).length) {
-          $checkboxesAll.attr('checked', checked);
+          $checkboxesAll.scb_changeChecked(opts, checked);
         }
         return;
       }
@@ -106,15 +117,15 @@
       if (e.shiftKey && lastIndex != -1) {
         var di = (curIndex > lastIndex ? 1 : -1);
         for (var i = lastIndex; i != curIndex; i += di) {
-          $checkboxes.eq(i).attr('checked', checked);
+          $checkboxes.eq(i).scb_changeChecked(opts, checked);
         }
       }
 
       if ($checkboxesSelectAll) {
         if (checked && !$checkboxes.not(':checked').length) {
-          $checkboxesSelectAll.attr('checked', true);
+          $checkboxesSelectAll.scb_changeChecked(opts, true);
         } else if (!checked) {
-          $checkboxesSelectAll.attr('checked', false);
+          $checkboxesSelectAll.scb_changeChecked(opts, false);
         }
       }
 
@@ -137,15 +148,16 @@
         } else {
           checked = !!$checkboxes.eq(0).attr('checked');
         }
-        $checkboxesAll.attr('checked', !checked);
+        $checkboxesAll.scb_changeChecked(opts, !checked);
       });
     }
 
     if (opts.checkboxSelector) {
       $containersAll.bind('click' + ns, function(e) {
         var $checkbox = $($(this).data('childCheckbox'));
-        $checkbox.not(e.target).attr('checked', function() {
-          return !$checkbox.attr('checked');
+        $checkbox.not(e.target).each(function() {
+          var checked = !$checkbox.attr('checked');
+          $(this).scb_changeChecked(opts, checked);
         });
 
         $checkbox[0].focus();
