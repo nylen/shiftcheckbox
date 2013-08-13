@@ -3,6 +3,7 @@
   <head>
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="jquery.shiftcheckbox.js"></script>
+    <script type="text/javascript" src="//google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
     <script type="text/javascript">
       // jQuery color animation plugin - from
       // http://stackoverflow.com/questions/190560/2302005#2302005
@@ -115,12 +116,12 @@
       </p>
       <p>
         Code:
-<pre>$('#demo1 div.checkbox').shiftcheckbox({
+<pre class="prettyprint">$('#demo1 div.checkbox').shiftcheckbox({
   checkboxSelector: ':checkbox',
   selectAll: $('#demo1 .all')
 });</pre>
         To disable the plugin:
-        <code>$('#demo1 div.checkbox, #demo1 .all').unbind('.shiftcheckbox');</code>
+        <code class="prettyprint">$('#demo1 div.checkbox, #demo1 .all').unbind('.shiftcheckbox');</code>
       </p>
       <p id="demo1-link">No links clicked yet</p>
       <div class="all">
@@ -199,10 +200,10 @@
         the <code>checkboxSelector</code> option like the first demo does.
       </p>
       <p>
-        Code: <code>$('#demo2 :checkbox').shiftcheckbox();</code>
+        Code: <code class="prettyprint">$('#demo2 :checkbox').shiftcheckbox();</code>
         <br />
         To disable the plugin:
-        <code>$('#demo2 :checkbox').unbind('.shiftcheckbox');</code>
+        <code class="prettyprint">$('#demo2 :checkbox').unbind('.shiftcheckbox');</code>
       </p>
       <div>
         <input type="checkbox" id="cb-2-1" />
@@ -251,12 +252,12 @@
       </p>
       <p>
         Code:
-<pre>$('#demo3 .row').shiftcheckbox({
+<pre class="prettyprint">$('#demo3 .row').shiftcheckbox({
   checkboxSelector: ':checkbox',
   selectAll: '#demo3 .all'
 });</pre>
         To disable the plugin:
-        <code>$('#demo3 .row, #demo3 .all').unbind('.shiftcheckbox');</code>
+        <code class="prettyprint">$('#demo3 .row, #demo3 .all').unbind('.shiftcheckbox');</code>
       </p>
       <input type="checkbox" class="all" /> <a class="all" href="#">Select all 1</a>
       <div class="row all">
