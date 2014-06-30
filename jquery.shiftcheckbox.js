@@ -16,7 +16,8 @@
     opts = $.extend({
       checkboxSelector: null,
       selectAll: null,
-      onChange: null
+      onChange: null,
+      filter: null
     }, opts);
 
     if (typeof opts.onChange != 'function') {
@@ -154,6 +155,9 @@
 
     if (opts.checkboxSelector) {
       $containersAll.on('click' + ns, function(e) {
+        if ($(e.target).closest(opts.filter).length) {
+          return;
+        }
         var $checkbox = $($(this).data('childCheckbox'));
         $checkbox.not(e.target).each(function() {
           var checked = !$checkbox.prop('checked');

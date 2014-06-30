@@ -32,7 +32,12 @@
           selectAll: '#demo3 .all'
         });
 
-        $('.demo a').click(function() {
+        $('#demo4 tr').shiftcheckbox({
+          checkboxSelector: ':checkbox',
+          filter: 'a'
+        });
+
+        $('.demo:not(#demo4) a').click(function() {
           //document.location.href = $(this).attr('href');
           setInfoText('Clicked link: ' + $(this).attr('href') + ' at ' + new Date());
           return false;
@@ -116,9 +121,7 @@
         checkbox.  The rows are the <code>div.checkbox</code> elements, and the
         presence of the <code>checkboxSelector</code> option tells the plugin
         that it should handle click events on the rows and pass them to the
-        checkboxes.  Note that if a row contains clickable elements such as
-        links or buttons, they should have a click handler which returns false
-        if you do not want the clicks to be passed through to the checkboxes.
+        checkboxes.
       </p>
       <p>
         Code:
@@ -317,6 +320,15 @@ $('#demo1 :checkbox').change(function() {
           Demo 3 checkbox 6 label
         </label>
       </div>
+    </div>
+    <h2>Demo 4 - filter option</h2>
+    <div class="demo" id="demo4">
+      <p>
+        Specify a selector of elements to ignore the click event.  Use this if you want to allow clicking on a container that has links or other elements with separate click behavior.
+      </p>
+      <table>
+        <tr><td>Click me!</td><td><a href="#demo4" id="demo-4-link">Demo 4 link</a></td><td><input type="checkbox" id="cb-4-1" /></td></tr>
+      </table>
     </div>
   </body>
 </html>
