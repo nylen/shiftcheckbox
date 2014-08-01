@@ -7,4 +7,6 @@ This jQuery plugin can perform the following checkbox-related functions:
 - Passing clicks from a "row" element that contains a checkbox to the checkbox
   itself
 
-For documentation and demos, see http://nylen.github.io/shiftcheckbox.
+For documentation and demos, see http://nylen.github.io/shiftcheckbox/.
+
+For the jQuery plugin page, see https://plugins.jquery.com/shiftcheckbox/.
