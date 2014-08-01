@@ -105,6 +105,11 @@
         checkboxes.
       </p>
       <p>
+        Because the <code>ignoreClick</code> option is set,
+        clicking on one of the links inside the rows will
+        not toggle the associated checkboxes.
+      </p>
+      <p>
         Code:
         <pre class="prettyprint"><?php echo file_get_contents('demo1.js'); ?></pre>
         To disable the plugin:
@@ -243,12 +248,15 @@
         To disable the plugin:
         <pre class="prettyprint">$('#demo3 .row, #demo3 .all').off('.shiftcheckbox');</pre>
       </p>
-      <input type="checkbox" class="all" /> <a class="all" href="#">Select all 1</a>
+      <input type="checkbox" class="all" />
+      <a class="all block-click" href="#demo3-all1">Select all 1</a>
       <div class="row all">
-        <input type="checkbox" /> <a class="all" href="#">Select all 2</a>
+        <input type="checkbox" />
+        <a class="all block-click" href="#demo3-all2">Select all 2</a>
       </div>
       <div class="row">
-        <input type="checkbox" class="all" /> <a class="all" href="#">Select all 3</a>
+        <input type="checkbox" class="all" />
+        <a class="all block-click" href="#demo3-all3">Select all 3</a>
       </div>
       <div>
         <label class="row" for="cb-3-1">

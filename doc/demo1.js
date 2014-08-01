@@ -5,6 +5,7 @@ $('#demo1 div.checkbox').shiftcheckbox({
 
     checkboxSelector : ':checkbox',
     selectAll        : $('#demo1 .all'),
+    ignoreClick      : 'a',
 
     // The onChange function will be called whenever the
     // plugin changes the state of a checkbox.

@@ -1,7 +1,9 @@
-$('.demo a.block-clicks').click(function() {
+$('.demo a').click(function() {
 
     setInfoText('Clicked link: ' + $(this).attr('href')
         + ' at ' + new Date());
 
-    return false;
+    if ($(this).hasClass('block-click')) {
+        return false;
+    }
 });
