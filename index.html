@@ -33,6 +33,7 @@ $('#demo1 div.checkbox').shiftcheckbox({
 
 // If you also want to handle the user clicking on a
 // checkbox, use the jQuery .change() event.
+
 $('#demo1 :checkbox').change(function() {
     setInfoText(
         'Clicked checkbox ' + $(this).attr('id')
@@ -46,7 +47,7 @@ $('#demo3 .row').shiftcheckbox({
     selectAll        : '#demo3 .all'
 });
 
-$('.demo a').click(function() {
+$('.demo a:not(.toggle-code)').click(function() {
 
     setInfoText('Clicked link: ' + $(this).attr('href')
         + ' at ' + new Date());
@@ -55,6 +56,18 @@ $('.demo a').click(function() {
         return false;
     }
 });
+
+        $('.toggle-code').click(function() {
+          var $pre = $(this).parent().next('pre');
+          if ($pre.is(':visible')) {
+            $pre.hide();
+            $(this).text('show');
+          } else {
+            $pre.show();
+            $(this).text('hide');
+          }
+          return false;
+        });
       });
     </script>
     <style type="text/css">
@@ -147,7 +160,7 @@ $('.demo a').click(function() {
         not toggle the associated checkboxes.
       </p>
       <p>
-        Code:
+        Code (<a class="toggle-code" href="#">hide</a>):
         <pre class="prettyprint">$('#demo1 div.checkbox').shiftcheckbox({
 
     // Options accept selectors, jQuery objects, or DOM
@@ -170,6 +183,7 @@ $('.demo a').click(function() {
 
 // If you also want to handle the user clicking on a
 // checkbox, use the jQuery .change() event.
+
 $('#demo1 :checkbox').change(function() {
     setInfoText(
         'Clicked checkbox ' + $(this).attr('id')

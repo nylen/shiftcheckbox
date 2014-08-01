@@ -20,6 +20,7 @@ $('#demo1 div.checkbox').shiftcheckbox({
 
 // If you also want to handle the user clicking on a
 // checkbox, use the jQuery .change() event.
+
 $('#demo1 :checkbox').change(function() {
     setInfoText(
         'Clicked checkbox ' + $(this).attr('id')

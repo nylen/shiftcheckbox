@@ -18,6 +18,18 @@
 <?php echo file_get_contents('demo3.js'); ?>
 
 <?php echo file_get_contents('block-clicks.js'); ?>
+
+        $('.toggle-code').click(function() {
+          var $pre = $(this).parent().next('pre');
+          if ($pre.is(':visible')) {
+            $pre.hide();
+            $(this).text('show');
+          } else {
+            $pre.show();
+            $(this).text('hide');
+          }
+          return false;
+        });
       });
     </script>
     <style type="text/css">
@@ -110,7 +122,7 @@
         not toggle the associated checkboxes.
       </p>
       <p>
-        Code:
+        Code (<a class="toggle-code" href="#">hide</a>):
         <pre class="prettyprint"><?php echo file_get_contents('demo1.js'); ?></pre>
         To disable the plugin:
         <pre class="prettyprint">$('#demo1 div.checkbox, #demo1 .all').off('.shiftcheckbox');</pre>

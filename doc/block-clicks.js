@@ -1,4 +1,4 @@
-$('.demo a').click(function() {
+$('.demo a:not(.toggle-code)').click(function() {
 
     setInfoText('Clicked link: ' + $(this).attr('href')
         + ' at ' + new Date());
