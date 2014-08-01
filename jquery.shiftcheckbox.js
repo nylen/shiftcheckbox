@@ -14,9 +14,9 @@
 
   $.fn.shiftcheckbox = function(opts) {
     opts = $.extend({
-      checkboxSelector: null,
-      selectAll: null,
-      onChange: null
+      checkboxSelector : null,
+      selectAll        : null,
+      onChange         : null
     }, opts);
 
     if (typeof opts.onChange != 'function') {
@@ -29,13 +29,13 @@
       return this;
     }
 
-    var $containers;
-    var $checkboxes;
-    var $containersSelectAll;
-    var $checkboxesSelectAll;
-    var $otherSelectAll;
-    var $containersAll;
-    var $checkboxesAll;
+    var $containers,
+        $checkboxes,
+        $containersSelectAll,
+        $checkboxesSelectAll,
+        $otherSelectAll,
+        $containersAll,
+        $checkboxesAll;
 
     if (opts.selectAll) {
       // We need to set up a "select all" control

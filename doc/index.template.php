@@ -11,47 +11,13 @@
       }
 
       $(function() {
-$('#demo1 div.checkbox').shiftcheckbox({
+<?php echo file_get_contents('demo1.js'); ?>
 
-    // Options accept selectors, jQuery objects, or DOM
-    // elements.
+<?php echo file_get_contents('demo2.js'); ?>
 
-    checkboxSelector : ':checkbox',
-    selectAll        : $('#demo1 .all'),
+<?php echo file_get_contents('demo3.js'); ?>
 
-    // The onChange function will be called whenever the
-    // plugin changes the state of a checkbox.
-
-    onChange : function(checked) {
-        setInfoText(
-            'Changed checkbox ' + $(this).attr('id')
-            + ' to ' + checked + ' programmatically');
-    }
-
-});
-
-// If you also want to handle the user clicking on a
-// checkbox, use the jQuery .change() event.
-$('#demo1 :checkbox').change(function() {
-    setInfoText(
-        'Clicked checkbox ' + $(this).attr('id')
-        + ', checked=' + this.checked);
-});
-
-$('#demo2 :checkbox').shiftcheckbox();
-
-$('#demo3 .row').shiftcheckbox({
-    checkboxSelector : ':checkbox',
-    selectAll        : '#demo3 .all'
-});
-
-$('.demo a.block-clicks').click(function() {
-
-    setInfoText('Clicked link: ' + $(this).attr('href')
-        + ' at ' + new Date());
-
-    return false;
-});
+<?php echo file_get_contents('block-clicks.js'); ?>
       });
     </script>
     <style type="text/css">
@@ -140,33 +106,7 @@ $('.demo a.block-clicks').click(function() {
       </p>
       <p>
         Code:
-        <pre class="prettyprint">$('#demo1 div.checkbox').shiftcheckbox({
-
-    // Options accept selectors, jQuery objects, or DOM
-    // elements.
-
-    checkboxSelector : ':checkbox',
-    selectAll        : $('#demo1 .all'),
-
-    // The onChange function will be called whenever the
-    // plugin changes the state of a checkbox.
-
-    onChange : function(checked) {
-        setInfoText(
-            'Changed checkbox ' + $(this).attr('id')
-            + ' to ' + checked + ' programmatically');
-    }
-
-});
-
-// If you also want to handle the user clicking on a
-// checkbox, use the jQuery .change() event.
-$('#demo1 :checkbox').change(function() {
-    setInfoText(
-        'Clicked checkbox ' + $(this).attr('id')
-        + ', checked=' + this.checked);
-});
-</pre>
+        <pre class="prettyprint"><?php echo file_get_contents('demo1.js'); ?></pre>
         To disable the plugin:
         <pre class="prettyprint">$('#demo1 div.checkbox, #demo1 .all').off('.shiftcheckbox');</pre>
       </p>
@@ -248,8 +188,7 @@ $('#demo1 :checkbox').change(function() {
       </p>
       <p>
         Code:
-        <pre class="prettyprint">$('#demo2 :checkbox').shiftcheckbox();
-</pre>
+        <pre class="prettyprint"><?php echo file_get_contents('demo2.js'); ?></pre>
         To disable the plugin:
         <pre class="prettyprint">$('#demo2 :checkbox').off('.shiftcheckbox');</pre>
       </p>
@@ -300,11 +239,7 @@ $('#demo1 :checkbox').change(function() {
       </p>
       <p>
         Code:
-        <pre class="prettyprint">$('#demo3 .row').shiftcheckbox({
-    checkboxSelector : ':checkbox',
-    selectAll        : '#demo3 .all'
-});
-</pre>
+        <pre class="prettyprint"><?php echo file_get_contents('demo3.js'); ?></pre>
         To disable the plugin:
         <pre class="prettyprint">$('#demo3 .row, #demo3 .all').off('.shiftcheckbox');</pre>
       </p>
